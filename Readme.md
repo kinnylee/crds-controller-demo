@@ -27,3 +27,10 @@ kubectl get sca scalingtest -o yaml
 go get k8s.io/code-generator
 ./hack/update-codegen.sh
 ```
+
+### 编译运行
+
+```bash
+go build -o bin/app
+./bin/app
+```
