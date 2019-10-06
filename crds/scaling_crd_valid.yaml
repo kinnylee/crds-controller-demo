@@ -1,0 +1,52 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: scalings.control.kinnylee.com
+spec:
+  group: control.kinnylee.com
+  versions:
+    - name: v1
+      served: true
+      storage: true
+  scope: Namespaced
+  names:
+    plural: scalings
+    singular: scaling
+    kind: Scaling
+    shortNames:
+      - sca
+  validation:
+    openAPIV3Schema:
+      properties:
+        spec:
+          required:
+            - targetDeployment
+            - minReplicas
+            - maxReplicas
+            - metricType
+            - step
+            - scaleUp
+            - scaleDown
+          properties:
+            targetDeployment:
+              type: string
+            minReplicas:
+              type: integer
+              minimum: 0
+            maxReplicas:
+              type: integer
+              minimum: 0
+            metircType:
+              type: string
+              enum:
+                - CPU
+                - MEMORY
+                - REQUESTS
+            step:
+              type: integer
+              minimum: 0
+            scaleUp:
+              type: integer
+            scaleDown:
+              type: integer
+              minimum: 0

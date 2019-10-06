@@ -1,0 +1,12 @@
+apiVersion: control.kinnylee.com/v1
+kind: Scaling
+metadata:
+  name: scalingtest
+spec:
+#  targetDeployment: test
+  minReplicas: 1
+  maxReplicas: 5
+  metricType: CPU
+  step: 1
+  scaleUp: 80
+  scaleDown: 40
