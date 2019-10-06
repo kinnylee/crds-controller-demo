@@ -18,8 +18,8 @@ func Resource(resource string) schema.GroupResource{
 }
 
 var(
-	SchemaBuilder runtime.SchemeBuilder
-	localSchemeBuilder = &SchemaBuilder
+	SchemeBuilder runtime.SchemeBuilder
+	localSchemeBuilder = &SchemeBuilder
 	AddToScheme = localSchemeBuilder.AddToScheme
 )
 
