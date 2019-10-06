@@ -8,13 +8,13 @@ import(
 
 )
 
-var	SchemaGroupVersion = schema.GroupVersion{
+var	SchemeGroupVersion = schema.GroupVersion{
 		Group: control.GroupName,
 		Version: "v1",
 }
 
 func Resource(resource string) schema.GroupResource{
-	return SchemaGroupVersion.WithResource(resource).GroupResource()
+	return SchemeGroupVersion.WithResource(resource).GroupResource()
 }
 
 var(
@@ -28,10 +28,10 @@ func init() {
 }
 
 func addKnownTypes(schema *runtime.Scheme) error {
-	schema.AddKnownTypes(SchemaGroupVersion,
+	schema.AddKnownTypes(SchemeGroupVersion,
 		&Scaling{},
 		&ScalingList{},
 	)
-	metav1.AddToGroupVersion(schema, SchemaGroupVersion)
+	metav1.AddToGroupVersion(schema, SchemeGroupVersion)
 	return nil
 }
