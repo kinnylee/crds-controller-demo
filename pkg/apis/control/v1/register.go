@@ -30,7 +30,7 @@ func init() {
 func addKnownTypes(schema *runtime.Scheme) error {
 	schema.AddKnownTypes(SchemaGroupVersion,
 		&Scaling{},
-		&ScalingList{}
+		&ScalingList{},
 	)
 	metav1.AddToGroupVersion(schema, SchemaGroupVersion)
 	return nil
