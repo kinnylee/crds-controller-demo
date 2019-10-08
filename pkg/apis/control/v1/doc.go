@@ -1,4 +1,4 @@
 // +k8s:deepcopy-gen=package
-// +groupName=control.example.com
+// +groupName=control.kinnylee.com
 
 package v1

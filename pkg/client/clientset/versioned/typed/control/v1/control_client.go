@@ -29,7 +29,7 @@ type ControlV1Interface interface {
 	ScalingsGetter
 }
 
-// ControlV1Client is used to interact with features provided by the control.example.com group.
+// ControlV1Client is used to interact with features provided by the control.kinnylee.com group.
 type ControlV1Client struct {
 	restClient rest.Interface
 }

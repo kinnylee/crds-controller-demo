@@ -34,9 +34,9 @@ type FakeScalings struct {
 	ns   string
 }
 
-var scalingsResource = schema.GroupVersionResource{Group: "control.example.com", Version: "v1", Resource: "scalings"}
+var scalingsResource = schema.GroupVersionResource{Group: "control.kinnylee.com", Version: "v1", Resource: "scalings"}
 
-var scalingsKind = schema.GroupVersionKind{Group: "control.example.com", Version: "v1", Kind: "Scaling"}
+var scalingsKind = schema.GroupVersionKind{Group: "control.kinnylee.com", Version: "v1", Kind: "Scaling"}
 
 // Get takes name of the scaling, and returns the corresponding scaling object, and an error if there is any.
 func (c *FakeScalings) Get(name string, options v1.GetOptions) (result *controlv1.Scaling, err error) {
