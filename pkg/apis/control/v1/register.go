@@ -8,6 +8,12 @@ import(
 
 )
 
+var(
+	SchemeBuilder = runtime.NewSchemeBuilder(addKnownTypes)
+	localSchemeBuilder = &SchemeBuilder
+	AddToScheme = localSchemeBuilder.AddToScheme
+)
+
 var	SchemeGroupVersion = schema.GroupVersion{
 		Group: control.GroupName,
 		Version: "v1",
@@ -16,12 +22,6 @@ var	SchemeGroupVersion = schema.GroupVersion{
 func Resource(resource string) schema.GroupResource{
 	return SchemeGroupVersion.WithResource(resource).GroupResource()
 }
-
-var(
-	SchemeBuilder runtime.SchemeBuilder
-	localSchemeBuilder = &SchemeBuilder
-	AddToScheme = localSchemeBuilder.AddToScheme
-)
 
 func init() {
 	localSchemeBuilder.Register()
