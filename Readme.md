@@ -18,7 +18,7 @@ kubectl get sca scalingtest -o yaml
 ### 创建含校验功能的资源对象
 
 ```bash
-
+kubectl apply -f crds/scaling_test_valid.yaml
 ```
 
 ### 用code-generate生成代码

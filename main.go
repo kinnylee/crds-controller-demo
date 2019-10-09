@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/tools/clientcmd"
@@ -12,7 +13,29 @@ import (
 	"time"
 )
 
+var(
+	kubeConfig *string
+	masterUrl string
+)
+
+func init(){
+	u, err := user.Current()
+
+	if err != nil {
+		panic(err.Error())
+	}
+	if home := u.HomeDir; home != "" {
+		kubeConfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "path to the kube config file",
+			)
+	} else {
+		kubeConfig = flag.String("kubeconfig", "", "path to the kube config file")
+	}
+
+
+}
+
 func main()  {
+	flag.Parse()
 	client, err := newKubeClient()
 	if err != nil {
 		log.Fatalf("new kube client error: %v", err)
@@ -39,14 +62,8 @@ func main()  {
 }
 
 func newKubeClient()(clientSet.Interface, error) {
-	u, err := user.Current()
 
-	if err != nil {
-		panic(err.Error())
-	}
-
-	kubeConfig := filepath.Join(u.HomeDir, ".kube", "config")
-	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
+	config, err := clientcmd.BuildConfigFromFlags("", *kubeConfig)
 	if err != nil {
 		return nil, fmt.Errorf("faild create cluster, config: %v", err)
 	}
