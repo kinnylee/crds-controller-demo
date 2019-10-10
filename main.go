@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	clientSet "kinnylee.com/crds-controller-demo/pkg/client/clientset/versioned"
 	informers "kinnylee.com/crds-controller-demo/pkg/client/informers/externalversions"
@@ -13,32 +12,6 @@ import (
 )
 
 func main()  {
-	client, err := newKubeClient()
-	if err != nil {
-		log.Fatalf("new kube client error: %v", err)
-	}
-
-	factory := informers.NewSharedInformerFactory(client, 30 * time.Second)
-	informer := factory.Control().V1().Scalings()
-	lister := informer.Lister()
-
-	stopCh := make(chan struct{})
-	factory.Start(stopCh)
-
-	for{
-		ret, err := lister.List(labels.Everything())
-		if err != nil {
-			log.Printf("list error: %v", err)
-		} else {
-			for _, scaling := range ret{
-				log.Println(scaling)
-			}
-			time.Sleep(5 * time.Second)
-		}
-	}
-}
-
-func newKubeClient()(clientSet.Interface, error) {
 	u, err := user.Current()
 
 	if err != nil {
@@ -48,11 +21,27 @@ func newKubeClient()(clientSet.Interface, error) {
 	kubeConfig := filepath.Join(u.HomeDir, ".kube", "config")
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 	if err != nil {
-		return nil, fmt.Errorf("faild create cluster, config: %v", err)
+		log.Printf("faild create cluster, config: %v", err)
+		panic(err.Error())
 	}
-	cli, err := clientSet.NewForConfig(config)
+	kubeClient, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		return nil, fmt.Errorf("faild create custom kube client: %v", err)
+		panic(err.Error())
 	}
-	return cli, nil
+
+	scalingClient, err := clientSet.NewForConfig(config)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	factory := informers.NewSharedInformerFactory(scalingClient, 30 * time.Second)
+
+	controller := NewController(kubeClient, scalingClient, factory.Control().V1().Scalings())
+
+	stopCh := make(<-chan struct{})
+	go factory.Start(stopCh)
+
+	if err = controller.Run(2, stopCh); err != nil {
+		log.Fatal("error run controller: %s", err.Error())
+	}
 }
