@@ -16,7 +16,7 @@ var(
 
 var	SchemeGroupVersion = schema.GroupVersion{
 		Group: control.GroupName,
-		Version: "v1",
+		Version: control.Version,
 }
 
 func Resource(resource string) schema.GroupResource{

@@ -14,12 +14,12 @@ type Scaling struct {
 
 type ScalingSpec struct {
 	TargetDeployment string `json:"targetDeployment"`
-	MinReplicas string `json:"minReplicas"`
-	MaxReplicas string `json:"maxReplicas"`
+	MinReplicas int `json:"minReplicas"`
+	MaxReplicas int `json:"maxReplicas"`
 	MetricType string `json:"metricType"`
-	Step string `json:"step"`
-	ScaleUp string `json:"scaleUp"`
-	ScaleDown string `json:"scaleDown"`
+	Step int `json:"step"`
+	ScaleUp int`json:"scaleUp"`
+	ScaleDown int `json:"scaleDown"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
