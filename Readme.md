@@ -31,6 +31,8 @@ go get k8s.io/code-generator
 ### 编译运行
 
 ```bash
-go build -o bin/app
-./bin/app
+go build -o bin/app main.go
+sudo ./crds-controller-demo -kubeconfig=/home/kinnylee/.kube/config -alsologtostderr=true
+kubectl apply -f crds/ scaling_test.yaml
+kubectl delete -f crds/ scaling_test.yaml
 ```

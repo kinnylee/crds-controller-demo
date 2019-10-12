@@ -62,8 +62,8 @@ func NewController(
 		scalingInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
 			AddFunc:    controller.enqueueScaling,
 			UpdateFunc: func(oldObj, newObj interface{}) {
-				oldScaling := (oldObj).(scalingv1.Scaling)
-				newScaling := (newObj).(scalingv1.Scaling)
+				oldScaling := (oldObj).(*scalingv1.Scaling)
+				newScaling := (newObj).(*scalingv1.Scaling)
 				if oldScaling.ResourceVersion == newScaling.ResourceVersion {
 					return
 				}
@@ -122,7 +122,7 @@ func (c *Controller) processNextWorkItem() bool {
 			return fmt.Errorf("Error syncing %s:%s", key, err.Error())
 		}
 		c.workqueue.Forget(obj)
-		glog.Info("Successfully Synced %s", key)
+		glog.Infof("Successfully Synced %s", key)
 		return nil
 
 	}(obj)
