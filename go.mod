@@ -5,7 +5,7 @@ go 1.13
 require (
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/imdario/mergo v0.3.8 // indirect
-	golang.org/x/crypto v0.0.0-20190611184440-5c40567a22f8 // indirect
+	golang.org/x/crypto v0.1.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45 // indirect
 	golang.org/x/time v0.0.0-20190921001708-c4c64cad1fd0 // indirect
 	k8s.io/api v0.0.0-20191005115622-2e41325d9e4b
